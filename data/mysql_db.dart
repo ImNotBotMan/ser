@@ -54,8 +54,7 @@ class MySqlDataSourse implements IDataSourse {
           values (:name,:startDateTime, :userId, :isComplete)''',
           {
             'name': model.name,
-            'startDateTime': null,
-            //  DateTime.now().toIso8601String(),
+            'startDateTime': DateTime.now().toIso8601String(),
             'userId': model.userId,
             'isComplete': 0
           });
@@ -96,8 +95,12 @@ class MySqlDataSourse implements IDataSourse {
   }) async {
     try {
       await connection.execute(
-        'update items set isComplete=1 where id=:id and userId=:userId  ',
-        {'userId': userId, 'id': itemId},
+        'update items set isComplete=1 , finishDateTime=:finishDateTime  where id=:id and userId=:userId  ',
+        {
+          'userId': userId,
+          'id': itemId,
+          'finishDateTime': DateTime.now().toIso8601String()
+        },
       );
       return true;
     } catch (e) {

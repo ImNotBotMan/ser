@@ -34,7 +34,7 @@ Future<Response> removeItem(RequestContext context) async {
 
   return Response.json(
     statusCode: isSucces ? 200 : 400,
-    body: ErrorModel.noItem().toJson(),
+    body: isSucces ? {'isSucces': isSucces} : ErrorModel.noItem().toJson(),
   );
 }
 
